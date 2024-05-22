@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Str;
 
-class SkmJawaban extends Model
+class SkmConfig extends Model
 {
     use HasFactory;
-      protected $table = 'skm_jawaban';
-    protected $primaryKey = 'skm_jawaban_id';
+
+    protected $table = 'skm_config';
+    protected $primaryKey = 'skm_config_id';
 
      protected static function boot(){
         parent::boot();

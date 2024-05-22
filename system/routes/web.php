@@ -17,6 +17,7 @@ use App\Http\Controllers\SkmController;
 
 	Route::controller(SkmController::class)->group(function () {
 		Route::get('/', 'index');
-		Route::get('/{skm}/detail', 'show');
+		Route::get('/{config:opd_id}', 'skm');
+		Route::post('/save/{config:opd_id}', 'save');
 
 	});

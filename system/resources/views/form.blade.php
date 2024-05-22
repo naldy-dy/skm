@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>FormWizard_v2</title>
+	<title>SKM Ketapang</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="colorlib.com">
 	<!-- LINEARICONS -->
@@ -21,12 +21,11 @@
 	<div class="wrapper">
 		<div class="inner" style="overflow-y: scroll; height: 95%">
 			<div class="image-holder fixed-top">
-				<img src="{{url('public/skm')}}/images/bg.png"  class="sticky-top" alt="">
+				<img src="http://kantorkite.ketapangkab.go.id/public/{{$config->config_foto}}"  class="sticky-top" alt="">
 				<!-- <h3>SKM KABUPATEN KEATAPANG</h3> -->
 			</div>
-			<form action="{{url('admin/skm/save')}}" method="post">
+			<form action="{{url('save')}}/{{$config->opd_id}}" method="post">
 				@csrf
-			
 			<div id="wizard">
 				<!-- SECTION 1 -->
 				@foreach($list_kategori as $kategori)
