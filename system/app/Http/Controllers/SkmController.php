@@ -45,7 +45,7 @@ class SkmController extends Controller
           $pilihan->save();
       }
 
-      return back();
+      return back()->with('success','Jawaban berhasil dikirim');
     }
 
 
