@@ -23,6 +23,7 @@ class SkmController extends Controller
 
     function skm(SkmConfig $config){
       $data['config'] = $config;
+       $data['group'] = mt_rand(00000001,99999999);
       $kategori =  $data['list_kategori'] = SkmKategori::where('kategori_opd',$config->opd_id)
       ->get();
   
@@ -32,21 +33,38 @@ class SkmController extends Controller
       return view('form',$data);
     }
 
-    function save(Request $request,SkmConfig $config){
-      $config = $config;
-        for ($i = 0; $i < count($request->jawaban); $i++) {
+    public function save(Request $request, $opdId) {
+      // Validasi request
+      $validatedData = $request->validate([
+          'jawaban_soal_id.*' => 'required',
+      ]);
+  
+      // Memproses jawaban
+      foreach ($request->input('jawaban_soal_id') as $key => $soalId) {
+          $jawaban = '';
+  
+          // Memeriksa jenis pertanyaan
+          if ($request->has('jawaban_' . $soalId)) {
+              $jawaban = $request->input('jawaban_' . $soalId);
+          } elseif (isset($request->jawaban[$key])) {
+              $jawaban = $request->jawaban[$key];
+          }
+         
+  
+          // Menyimpan jawaban ke database
           $pilihan = new SkmJawaban;
-          $pilihan->jawaban = $request->jawaban[$i];
-          $pilihan->jawaban_opd = $config->opd_id;
+          $pilihan->jawaban = $jawaban;
+          $pilihan->jawaban_group = request('jawaban_group');
+          $pilihan->jawaban_soal_id = $soalId;
+          $pilihan->jawaban_opd = $opdId; // Simpan id OPD
           $pilihan->jawaban_tanggal = date('d');
           $pilihan->jawaban_bulan = date('m');
           $pilihan->jawaban_tahun = date('Y');
-          $pilihan->jawaban_soal_id = $request->jawaban_soal_id[$i];
           $pilihan->save();
       }
-
-      return back()->with('success','Jawaban berhasil dikirim');
-    }
+  
+      return back()->with('success', 'Jawaban berhasil dikirim');
+  }
 
 
 }
